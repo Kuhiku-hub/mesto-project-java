@@ -1,0 +1,11 @@
+.cards__info-area {
+  margin: 0;
+  padding: 25px 15px 31px 21px;
+  display: flex;
+  justify-content: space-between;
+  width: 246px;
+  display: flex;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+  background-color: #ffff;
+}
