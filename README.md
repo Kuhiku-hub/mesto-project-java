@@ -18,4 +18,3 @@
 
 #### Страница в GIT PAGES
 
-[Посмотреть](https://kuhiku-hub.github.io/mesto-project/)
