@@ -24,3 +24,7 @@
     margin: 0 auto 48px auto;
   }
 }
+
+#cards-template {
+  display:none;
+}

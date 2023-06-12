@@ -26,57 +26,7 @@
         </section>
         <!-- Конец секции profile -->
         <!-- Начало секции cards -->
-        <section class="cards">
-          <ul id="cards-template" class="cards">
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/1.jpg" class="cards__image" alt="Карачаевск" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Карачаевск</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/2.png" class="cards__image" alt="Гора Эльбрус" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Гора Эльбрус</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/3.png" class="cards__image" alt="Домбай" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Домбай</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/4.png" class="cards__image" alt="Гора Эльбрус" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Гора Эльбрус</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/5.png" class="cards__image" alt="Домбай" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Домбай</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-            <li class="cards__item">
-              <img src="./images/icon/Trash.svg" class="cards__trash">
-              <img src="./images/6.png" class="cards__image" alt="Карачаево - Черкессия" />
-              <div class="cards__info-area">
-                <h2 class="cards__description">Карачаево-Черкессия</h2>
-                <button type="button" class="cards__like" aria-label="Лайк"></button>
-              </div>
-            </li>
-          </ul>
+        <section id="cards-container" class="cards">
         </section>
         <!-- Конец секции cards -->
         <!-- Начало блока footer -->
@@ -108,14 +58,25 @@
           </form>
         </div>
       </div>
-      <div id="popup__zoom" class="popup popup__zoom_active">
+      <div id="popup-zoom" class="popup popup__zoom_active">
         <div class="popup__zoom-container">
-          <button type="button" class="popup__close" aria-label="Закрыть"></button>
-          <img src="./images/3.png" class="popup__zoom" alt="">
-          <p class="popup__context">Бла бла бла бла бла</p>
+          <button id="popup-zoom-close" type="button" class="popup__close" aria-label="Закрыть"></button>
+          <img class="popup__zoom" src="" alt="">
+          <p class="popup__context"></p>
         </div>
       </div>
       <!-- Конец popup -->
+      <!-- Образец для создания карточек-->
+        <ul id="cards-template" class="cards">
+          <li class="cards__item">
+            <img src="./images/icon/Trash.svg" class="cards__trash">
+            <img src="" class="cards__image" alt="" />
+              <div class="cards__info-area">
+                <h2  class="cards__description"></h2>
+                <button type="button" class="cards__like" aria-label="Лайк"></button>
+              </div>
+          </li>
+        </ul>
     </div>
     <script src="./script.js"></script>
   </body>
