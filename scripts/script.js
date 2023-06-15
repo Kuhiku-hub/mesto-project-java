@@ -1,21 +1,21 @@
 const popupProfile = document.querySelector("#profile-popup");
 const popupImage = document.querySelector("#image-popup");
 const popupZoom = document.querySelector("#popup-zoom");
-let profile = document.querySelector(".profile");
-let profileTitle = profile.querySelector(".profile__name");
-let profileJob = profile.querySelector(".profile__description");
+const profile = document.querySelector(".profile");
+const profileTitle = profile.querySelector(".profile__name");
+const profileJob = profile.querySelector(".profile__description");
 const cards = document.querySelector("#cards-template");
 const cardsContainer = document.querySelector("#cards-container");
 const editButton = profile.querySelector(".profile__edit-button");
 const addMesto = profile.querySelector(".profile__add-mesto");
 const profileForm = popupProfile.querySelector("#popup-profile-form");
 const imageFormSubmit = popupImage.querySelector("#popup-image-form");
-let nameInput = profileForm.querySelector("#username-input");
-let jobInput = profileForm.querySelector("#description-input");
-let imageDescription = popupImage.querySelector("#popup-image-name");
-let imageLink = popupImage.querySelector("#popup-image-link");
-let zoom = popupZoom.querySelector(".popup__zoom");
-let zoomContext = popupZoom.querySelector(".popup__context");
+const nameInput = profileForm.querySelector("#username-input");
+const jobInput = profileForm.querySelector("#description-input");
+const imageDescription = popupImage.querySelector("#popup-image-name");
+const imageLink = popupImage.querySelector("#popup-image-link");
+const zoom = popupZoom.querySelector(".popup__zoom");
+const zoomContext = popupZoom.querySelector(".popup__context");
 const zoomContainer = popupZoom.querySelector(".popup__zoom-container");
 
 function openPopup(popup) {
@@ -116,14 +116,13 @@ function createCard(item) {
   return cardsItem;
 }
 
-function addCard(item, container) {
+function addCard(item) {
   const card = createCard(item);
-  container.prepend(card)
+  cardsContainer.prepend(card)
 }
 
 initialCards.forEach((item) => {
-  const cards = cardsContainer
-  addCard(item, cards);
+  addCard(item, cardsContainer);
 });
 
 // добавление карточек через addMesto
