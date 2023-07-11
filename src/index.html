@@ -4,19 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>Project mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="body">
     <div class="page">
       <!-- Начало блока header -->
       <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="Логотип проекта Место" />
+        <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип проекта Место" />
       </header>
       <!-- Конец блока header -->
       <main class="content">
         <!-- Начало секции profile -->
         <section class="profile">
-          <img class="profile__avatar" src="./images/Аватар.jpg" alt="Жак-Ив Кусто на фоне моря" />
+          <img class="profile__avatar" src="<%=require('./images/Аватар.jpg')%>" alt="Жак-Ив Кусто на фоне моря" />
           <div class="profile__info-area">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button type="button" class="profile__edit-button" aria-label="Редактирование профиля пользователя"></button>
@@ -40,10 +39,12 @@
         <div class="popup__container">
           <button id="popup-profile-close" type="button" class="popup__close" aria-label="Закрыть форму"></button>
           <h2 class="popup__name">Редактировать профиль</h2>
-          <form id="popup-profile-form" class="popup__form" name="profile" novalidate>
-            <input id="username-input" type="text" class="popup__input" name="name" required placeholder="Ваше имя" value="Жак-Ив Кусто" />
-            <input id="description-input" type="text" class="popup__input" name="job" required placeholder="Чем вы занимаетесь ?" value="Исследователь океана" />
-            <button id="popup-profile-submit" type="submit" class="popup__submit" aria-label="Сохранить">Сохранить</button>
+          <form id="popup-profile-form" class="popup__form" name="profileForm" novalidate>
+              <input id="username-input" type="text" class="popup__input popup__input_type-error" name="name" required placeholder="Ваше имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" pattern="[a-zA-Zа-яА-Я\-\s]+$" required />
+              <span class="username-input-error popup__input-error"></span>
+              <input id="description-input" type="text" class="popup__input " name="job" required placeholder="Чем вы занимаетесь ?" value="Исследователь океана" minlength="2" maxlength="200"pattern="[a-zA-Zа-яА-Я\-\s]+$" required />
+              <span class="description-input-error popup__input-error"></span>
+            <button id="popup-profile-submit" type="submit" class="popup__submit" aria-label="Сохранить" >Сохранить</button>
           </form>
         </div>
       </div>
@@ -51,10 +52,12 @@
         <div class="popup__container">
           <button id="popup-image-close" type="button" class="popup__close" aria-label="Закрыть форму"></button>
           <h2 class="popup__name">Новое место</h2>
-          <form id="popup-image-form" class="popup__form" name="profile" novalidate>
-            <input id="popup-image-name" type="text" class="popup__input" name="name" required placeholder="Описание" />
-            <input id="popup-image-link" type="text" class="popup__input" name="job" required placeholder="Ссылка на картинку" />
-            <button id="popup-image-submit" type="submit" class="popup__submit" aria-label="Создать">Создать</button>
+          <form id="popup-image-form" class="popup__form" name="imageForm" novalidate>
+              <input id="popup-image-name" type="text" class="popup__input" name="name" required placeholder="Описание"  required />
+              <span class="popup-image-name-error popup__input-error"></span>
+              <input id="popup-image-link" type="url" class="popup__input" name="job" required placeholder="Ссылка на картинку" required />
+              <span class="popup-image-link-error popup__input-error"></span>
+            <button id="popup-image-submit" type="submit" class="popup__submit" aria-label="Создать" >Создать</button>
           </form>
         </div>
       </div>
@@ -69,7 +72,7 @@
       <!-- Образец для создания карточек-->
         <ul id="cards-template" class="cards">
           <li class="cards__item">
-            <img src="./images/icon/Trash.svg" class="cards__trash">
+            <img src="<%=require('./images/icon/Trash.svg')%>" class="cards__trash">
             <img src="" class="cards__image" alt="" />
               <div class="cards__info-area">
                 <h2  class="cards__description"></h2>
@@ -78,6 +81,6 @@
           </li>
         </ul>
     </div>
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./modules/index.js"></script>
   </body>
 </html>
