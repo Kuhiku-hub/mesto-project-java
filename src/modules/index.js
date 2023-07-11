@@ -1,12 +1,15 @@
 import '../pages/index.css';
 
-import { createCard } from './card.js'
-import { enableValidation , validateInputs} from './validate.js'
-import {closePopup , openPopup  } from './popup.js'
+import {createCard , addCard} from './card.js'
+
+import {enableValidation , inputCheckEmpty} from './validate.js'
+
+import {setEscButtonClose , setOverlayClickClose} from './popup.js'
+
 import {profile,
   profileTitle,
   profileJob,
-  editButton,
+  popupProfileOpenButton,
   addMesto,
   popupForm,
   popupInput,
@@ -25,8 +28,77 @@ import {profile,
   zoom,
   zoomContext,
   zoomContainer,
-  closeButtons} from './utils.js'
+  closeButtons , initialCards , validationSelectors } from './utils.js'
 
-  enableValidation(validateInputs)
+  export function openPopup(popup) {
+    popup.classList.add("popup_opened");
+    document.addEventListener('keydown', setEscButtonClose);
+    popup.addEventListener('mousedown', setOverlayClickClose);
+  }
 
-  inputSelector.addEventListener('input', enableValidation)
+  export function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', setEscButtonClose);
+    popup.removeEventListener('mousedown', setOverlayClickClose);
+  }
+
+  closeButtons.forEach((button) => {
+    const popup = button.closest('.popup');
+    button.addEventListener('click', () => closePopup(popup));
+  });
+
+  function openProfilePopup() {
+    openPopup(popupProfile)
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileJob.textContent;
+  }
+
+  function closePopupProfile() {
+    closePopup(popupProfile)
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileJob.textContent;
+  }
+
+  // функция изменения персональных данных
+  function submitProfileForm(evt) {
+    evt.preventDefault();
+    profileTitle.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+    closePopupProfile();
+  }
+
+  function openImageForm() {
+    openPopup(popupImage)
+  }
+
+  function closeImageForm() {
+    closePopup(popupImage);
+  }
+
+  function submitCreateCardForm(evt) {
+    evt.preventDefault();
+    const newCardDefault = {
+      link: imageLink.value,
+      name: imageDescription.value,
+      alt: imageDescription.value,
+    };
+    const formCard = createCard(newCardDefault);
+    cardsContainer.prepend(formCard)
+    imageLink.value = "";
+    imageDescription.value = "";
+    closeImageForm();
+  }
+
+  initialCards.forEach((item) => {
+    addCard(item, cardsContainer);
+  });
+
+  enableValidation(validationSelectors)
+
+  imageFormSubmit.addEventListener("submit", submitCreateCardForm);
+
+  addMesto.addEventListener("click", openImageForm);
+
+  profileForm.addEventListener("submit", submitProfileForm);
+
+  popupProfileOpenButton.addEventListener("click", openProfilePopup);

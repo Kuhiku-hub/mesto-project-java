@@ -40,9 +40,9 @@
           <button id="popup-profile-close" type="button" class="popup__close" aria-label="Закрыть форму"></button>
           <h2 class="popup__name">Редактировать профиль</h2>
           <form id="popup-profile-form" class="popup__form" name="profileForm" novalidate>
-              <input id="username-input" type="text" class="popup__input popup__input_type-error" name="name" required placeholder="Ваше имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" pattern="[a-zA-Zа-яА-Я\-\s]+$" required />
+              <input id="username-input" type="text" class="popup__input" name="name" required placeholder="Ваше имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" pattern="[a-zA-Zа-яА-Я\-\s]+$" />
               <span class="username-input-error popup__input-error"></span>
-              <input id="description-input" type="text" class="popup__input " name="job" required placeholder="Чем вы занимаетесь ?" value="Исследователь океана" minlength="2" maxlength="200"pattern="[a-zA-Zа-яА-Я\-\s]+$" required />
+              <input id="description-input" type="text" class="popup__input " name="job" required placeholder="Чем вы занимаетесь ?" value="Исследователь океана" minlength="2" maxlength="200"pattern="[a-zA-Zа-яА-Я\-\s]+$" />
               <span class="description-input-error popup__input-error"></span>
             <button id="popup-profile-submit" type="submit" class="popup__submit" aria-label="Сохранить" >Сохранить</button>
           </form>
@@ -53,9 +53,9 @@
           <button id="popup-image-close" type="button" class="popup__close" aria-label="Закрыть форму"></button>
           <h2 class="popup__name">Новое место</h2>
           <form id="popup-image-form" class="popup__form" name="imageForm" novalidate>
-              <input id="popup-image-name" type="text" class="popup__input" name="name" required placeholder="Описание"  required />
+              <input id="popup-image-name" type="text" class="popup__input" name="name" required placeholder="Описание" />
               <span class="popup-image-name-error popup__input-error"></span>
-              <input id="popup-image-link" type="url" class="popup__input" name="job" required placeholder="Ссылка на картинку" required />
+              <input id="popup-image-link" type="url" class="popup__input" name="job" required placeholder="Ссылка на картинку" />
               <span class="popup-image-link-error popup__input-error"></span>
             <button id="popup-image-submit" type="submit" class="popup__submit" aria-label="Создать" >Создать</button>
           </form>
@@ -81,6 +81,5 @@
           </li>
         </ul>
     </div>
-    <script type="module" src="./modules/index.js"></script>
   </body>
 </html>

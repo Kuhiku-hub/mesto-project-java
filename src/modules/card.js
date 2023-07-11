@@ -1,32 +1,5 @@
-import { cards , cardsContainer , popupZoom , zoom , zoomContext} from "./utils.js";
-import { openPopup , } from "./popup.js";
-
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+import { cards , cardsContainer , popupZoom , zoom , zoomContext } from "./utils.js";
+import { openPopup  } from "./index.js";
 
 function toggleLike(event) {
   event.target.classList.toggle("cards__like_active");
@@ -73,14 +46,10 @@ function addCard(item) {
   cardsContainer.prepend(card)
 }
 
-initialCards.forEach((item) => {
-  addCard(item, cardsContainer);
-});
-
 // удаление карточки
 function deleteCard(evt) {
   const revCard = evt.target.closest('.cards__item')
   revCard.remove();
 }
 
-export {createCard}
+export {createCard , addCard}

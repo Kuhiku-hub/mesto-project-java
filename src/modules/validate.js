@@ -1,4 +1,16 @@
-import {profileForm , validationSelectors } from './utils.js'
+import {popupSubmit , popupInput} from './utils.js'
+
+export function inputCheckEmpty() {
+  if (popupInput.value === '' || !popupInput.checkValidity()) {
+    popupSubmit.classList.add('popup__submit_inactive')
+    popupSubmit.disabled = true
+  } else {
+    popupSubmit.classList.remove('popup__submit_inactive')
+    popupSubmit.disabled = false
+  }
+}
+
+popupInput.addEventListener('input' , inputCheckEmpty)
 
 const showInputError = (popupSelector, inputSelector, inputErrorClass) => {
   const inputElement = popupSelector.querySelector(inputSelector);
@@ -12,7 +24,7 @@ const hideInputError = (popupSelector, inputSelector, inputErrorClass) => {
   const inputElement = popupSelector.querySelector(inputSelector);
   const errorElement = popupSelector.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
-  errorElement.textContent = 'Чувак это бебра';
+  errorElement.textContent = ''; // Clear the error message
   errorElement.classList.remove(inputErrorClass);
 };
 
@@ -43,7 +55,8 @@ const hasInvalidInput = (inputList ) => {
 };
 
 const toggleButtonState = (popupSelector, inputSelector, submitButtonSelector, inactiveButtonClass) => {
-  if (hasInvalidInput(popupSelector, inputSelector)) {
+  const inputList = Array.from(popupSelector.querySelectorAll(inputSelector));
+  if (hasInvalidInput(inputList)) {
     disableButton(submitButtonSelector, inactiveButtonClass);
   } else {
     enableButton(submitButtonSelector, inactiveButtonClass);
@@ -53,32 +66,56 @@ const toggleButtonState = (popupSelector, inputSelector, submitButtonSelector, i
 const setEventListeners = (popupSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) => {
   const inputList = Array.from(popupSelector.querySelectorAll(inputSelector));
   const buttonElement = popupSelector.querySelector(submitButtonSelector);
+
   popupSelector.addEventListener('reset', () => {
     disableButton(buttonElement, inactiveButtonClass);
   });
 
-  inputList.forEach((inputSelector) => {
-    const pattern = /^[a-zA-Zа-яА-ЯёЁ\s-]{2,40}$/;
-    if (!pattern.test(inputSelector.value)) {
-    showInputError(popupSelector, inputSelector, inputErrorClass, errorClass);
-    } else {
-    hideInputError(popupSelector, inputSelector, inputErrorClass, errorClass);
-    }
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      if (inputElement.id === 'username-input') {
+        validateField(inputElement, popupSelector.querySelector(`#${inputElement.id}-error`), {
+          required: true,
+          pattern: /^[a-zA-Zа-яА-ЯёЁ\s-]{2,40}$/,
+          customErrorMessage: 'Имя должно содержать от 2 до 40 символов и может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'
+        });
+      } else if (inputElement.id === 'description-input') {
+        validateField(inputElement, popupSelector.querySelector(`#${inputElement.id}-error`), {
+          required: true,
+          minLength: 2,
+          maxLength: 200,
+          customErrorMessage: 'О себе должно содержать от 2 до 200 символов.'
+        });
+      } else if (inputElement.id === 'popup-image-name') {
+        validateField(inputElement, popupSelector.querySelector(`#${inputElement.id}-error`), {
+          required: true,
+          pattern: /^[a-zA-Zа-яА-ЯёЁ\s-]{2,30}$/,
+          customErrorMessage: 'Название должно содержать от 2 до 30 символов и может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'
+        });
+      } else if (inputElement.id === 'popup-image-link') {
+        validateField(inputElement, popupSelector.querySelector(`#${inputElement.id}-error`), {
+          required: true,
+          pattern: /^(ftp|http|https):\/\/[^ "]+$/,
+          customErrorMessage: 'Пожалуйста , введите ссылку.'
+        });
+      }
+      toggleButtonState(popupSelector, inputSelector, submitButtonSelector, inactiveButtonClass);
     });
-  };
+  });
+};
 
 export const enableValidation = (formsDataSet) => {
   const formList = Array.from(document.querySelectorAll(formsDataSet.popupSelector));
 
     formList.forEach((popupForm) => {
         setEventListeners(
-            popupForm,
-            formsDataSet.popupSelector,
-            formsDataSet.inputSelector,
-            formsDataSet.submitButtonSelector,
-            formsDataSet.inactiveButtonClass,
-            formsDataSet.inputErrorClass,
-            formsDataSet.errorClass
+          popupForm,
+          formsDataSet.popupSelector,
+          formsDataSet.inputSelector,
+          formsDataSet.submitButtonSelector,
+          formsDataSet.inactiveButtonClass,
+          formsDataSet.inputErrorClass,
+          formsDataSet.errorClass
         );
     });
 };
