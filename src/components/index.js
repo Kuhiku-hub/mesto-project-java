@@ -160,6 +160,28 @@ function closeAvatarForm() {
   closePopup(popupAvatar);
 }
 
+// функция изменения персональных данных
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopupProfile();
+}
+
+function submitCreateCardForm(evt) {
+  evt.preventDefault();
+  const newCardDefault = {
+    link: imageLink.value,
+    name: imageDescription.value,
+    alt: imageDescription.value,
+  };
+  const formCard = createCard(newCardDefault);
+  cardsContainer.prepend(formCard);
+  imageLink.value = "";
+  imageDescription.value = "";
+  closeImageForm();
+}
+
 initialCards.forEach((item) => {
   addCard(item, cardsContainer);
 });
@@ -170,10 +192,10 @@ avatarOverlay.addEventListener("click", openAvatarForm);
 
 popupAvatarSubmit.addEventListener('submit' , handleSubmitAvatarProfileForm)
 
-imageFormSubmit.addEventListener("submit", handleSubmitPlaceForm);
+imageFormSubmit.addEventListener("submit", submitCreateCardForm);
 
 addMesto.addEventListener("click", openImageForm);
 
-profileForm.addEventListener("submit", handleSubmitProfileForm);
+profileForm.addEventListener("submit", submitProfileForm);
 
 popupProfileOpenButton.addEventListener("click", openProfilePopup);
