@@ -24,3 +24,7 @@
     height: 46px;
   }
 }
+
+.popup__submit:hover:disabled {
+  opacity: 20%;
+}
