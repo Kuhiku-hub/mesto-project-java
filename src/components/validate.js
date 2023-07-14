@@ -96,7 +96,7 @@ export const enableValidation = (formsDataSet) => {
 
 export function validateInputs(inputList, select) {
     inputList.forEach((inputElement) => {
-        const buttonElement = inputElement.closest(select.formSelector).querySelector(select.submitButtonSelector);
+        const buttonElement = inputElement.closest(select.popupSelector).querySelector(select.submitButtonSelector);
         toggleButtonState(inputList, buttonElement, select.inactiveButtonClass);
         isValid(profileForm, inputElement, select.inputErrorClass, select.errorClass);
     })

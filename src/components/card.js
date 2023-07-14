@@ -2,11 +2,7 @@ import { cards , cardsContainer , popupZoom , zoom , zoomContext } from "./utils
 
 import { openPopup  } from "./popup.js";
 
-import {dislikeCard , likeCard} from './api.js'
-
-function toggleLike(event) {
-  event.target.classList.toggle("cards__like_active");
-}
+import {deleteCard, dislikeCard, likeCard} from "./api";
 
 function openZoomPopup() {
   openPopup(popupZoom);
@@ -29,14 +25,12 @@ function showLikes(cardElementProvided, cardInfo) {
 function isLikedByUser(cardElement, cardInfo, userID) {
   const cardHeartElement = cardElement.querySelector('.cards__like');
   if (cardHeartElement) {
-      const isLiked = cardInfo.likes.some(user => user._id === userID)
-      if (isLiked) {
-          cardHeartElement.classList.add('cards__like_active')
-      }
+    const isLiked = cardInfo.likes.some((user) => user._id === userID);
+    if (isLiked) {
+      cardHeartElement.classList.add('cards__like_active');
+    }
   }
 }
-
-
 function showTrashIcon(cardElement, cardInfo, userId) {
   if (cardInfo.owner._id === userId) {
       const trashBinElement = cardElement.querySelector('.cards__trash');
@@ -99,34 +93,31 @@ function openZoomImage(evt) {
   zoomContext.textContent = clickedCardDescription.textContent;
 }
 
+function toggleLike(event) {
+  event.target.classList.toggle("cards__like_active");
+}
+
 // общая функция создания карточек
-function createCard(item) {
-  const cardsItem = cards.querySelector(".cards__item").cloneNode(true);
-  const cardName = cardsItem.querySelector(".cards__description");
-  const cardImage = cardsItem.querySelector('.cards__image');
+function createCard(cardInfo, userID) {
+  const cardElement = cards.querySelector('.cards__item').cloneNode(true);
+  const cardImage = cardElement.querySelector('.cards__image');
+  const cardName = cardElement.querySelector('.cards__description');
 
-  cardName.textContent = item.name;
-  cardImage.alt = `На картинке ${item.name}`;
-  cardImage.src = item.link;
+  cardElement.setAttribute('data-id', cardInfo._id);
+  cardImage.src = cardInfo.link;
+  cardName.textContent = cardInfo.name;
 
-  cardsItem.querySelector(".cards__like").addEventListener("click", toggleLike);
-  cardsItem
+  //isLikedByUser(cardElement, cardInfo, userID);
+  //showLikes(cardElement, cardInfo);
+  //showTrashIcon(cardElement, cardInfo, userID);
+
+  cardElement.querySelector(".cards__like").addEventListener("click", toggleLike);
+  cardElement
     .querySelector(".cards__trash")
-    .addEventListener("click", deleteCard);
+    .addEventListener("click", handleDeleteCard);
   cardImage.addEventListener("click", openZoomImage);
 
-  return cardsItem;
+  return cardElement;
 }
 
-function addCard(item) {
-  const card = createCard(item);
-  cardsContainer.prepend(card)
-}
-
-// удаление карточки
-function deleteCard(evt) {
-  const revCard = evt.target.closest('.cards__item')
-  revCard.remove();
-}
-
-export {createCard , addCard}
+export {createCard}

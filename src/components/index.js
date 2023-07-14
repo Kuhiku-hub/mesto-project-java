@@ -8,9 +8,9 @@ import {
   postCard,
 } from "./api.js";
 
-import { createCard, addCard } from "./card.js";
+import { createCard} from "./card.js";
 
-import { enableValidation} from "./validate.js";
+import {enableValidation , validateInputs} from "./validate.js";
 
 import { openPopup , closePopup} from "./popup.js";
 
@@ -51,6 +51,12 @@ import {
 
 let userId = null;
 
+function setDefaultValues() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileJob.textContent;
+}
+
+
 function updateProfileInfo(data) {
   profileTitle.textContent = data.name;
   profileJob.textContent = data.about;
@@ -81,26 +87,23 @@ function renderPage() {
 
 function closePopupProfile() {
   closePopup(popupProfile);
-  nameInput.value = profileTitle.textContent; // При закрытии POPUP , данные должны сбрасываться
-  jobInput.value = profileJob.textContent;
 }
 
 function handleSubmitProfileForm(evt) {
   evt.preventDefault();
-  profileForm.textContent = "Сохранение...";
+  profileForm.textContent = 'Сохранение...';
   profileDataDefault()
-    .then((data) => {
-      profileTitle.textContent =
-        data.name === "" ? profileTitle.textContent : data.name;
-      profileJob.textContent =
-        data.about === "" ? profileJob.textContent : data.about;
-      closePopupProfile();
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      profileForm.textContent = "Сохранить";
-    });
+      .then(data => {
+          profileTitle.textContent = (data.name === '') ? profileTitle.textContent : data.name;
+          profileJob.textContent = (data.about === '') ? profileJob.textContent : data.about;
+          closePopupProfile(evt.target.closest('.popup'));
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+          profileForm.textContent = 'Сохранить';
+      })
 }
+
 
 function handleSubmitAvatarProfileForm(evt) {
   evt.preventDefault();
@@ -140,8 +143,7 @@ closeButtons.forEach((button) => {
 
 function openProfilePopup() {
   openPopup(popupProfile);
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileJob.textContent;
+  setDefaultValues();
 }
 
 function openImageForm() {
@@ -160,42 +162,28 @@ function closeAvatarForm() {
   closePopup(popupAvatar);
 }
 
-// функция изменения персональных данных
-function submitProfileForm(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopupProfile();
-}
-
-function submitCreateCardForm(evt) {
-  evt.preventDefault();
-  const newCardDefault = {
-    link: imageLink.value,
-    name: imageDescription.value,
-    alt: imageDescription.value,
-  };
-  const formCard = createCard(newCardDefault);
-  cardsContainer.prepend(formCard);
-  imageLink.value = "";
-  imageDescription.value = "";
-  closeImageForm();
+function addCard(item) {
+  const card = createCard(item);
+  cardsContainer.prepend(card)
 }
 
 initialCards.forEach((item) => {
   addCard(item, cardsContainer);
 });
 
+renderPage();
+
+
 enableValidation(validationSelectors);
 
-avatarOverlay.addEventListener("click", openAvatarForm);
+avatarPencil.addEventListener("click", openAvatarForm);
 
 popupAvatarSubmit.addEventListener('submit' , handleSubmitAvatarProfileForm)
 
-imageFormSubmit.addEventListener("submit", submitCreateCardForm);
+imageFormSubmit.addEventListener("submit", handleSubmitPlaceForm);
 
 addMesto.addEventListener("click", openImageForm);
 
-profileForm.addEventListener("submit", submitProfileForm);
+profileForm.addEventListener("submit", handleSubmitProfileForm);
 
 popupProfileOpenButton.addEventListener("click", openProfilePopup);
