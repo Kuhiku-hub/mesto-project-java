@@ -1,5 +1,3 @@
-
-
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", setEscButtonClose);
@@ -13,16 +11,16 @@ function openPopup(popup) {
 }
 
 function setEscButtonClose(event) {
-  if (event.key === 'Escape') {
-    const popupOpened = document.querySelector('.popup_opened')
-      closePopup(popupOpened);
+  if (event.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
+    closePopup(popupOpened);
   }
 }
 
 function setOverlayClickClose(event) {
-  if (event.target.classList.contains('popup_opened')) {
-      closePopup(event.target);
+  if (event.target.classList.contains("popup_opened")) {
+    closePopup(event.target);
   }
 }
 
-export {setOverlayClickClose , setEscButtonClose , openPopup , closePopup }
+export { setOverlayClickClose, setEscButtonClose, openPopup, closePopup };

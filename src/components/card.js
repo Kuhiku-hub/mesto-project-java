@@ -1,8 +1,8 @@
-import { cards , popupZoom , zoom , zoomContext } from "./utils.js";
+import { cards, popupZoom, zoom, zoomContext } from "./utils.js";
 
-import { openPopup  } from "./popup.js";
+import { openPopup } from "./popup.js";
 
-import {deleteCard, dislikeCard, likeCard} from "./api";
+import { deleteCard, dislikeCard, likeCard } from "./api";
 
 function openZoomPopup() {
   openPopup(popupZoom);
@@ -11,41 +11,41 @@ function openZoomPopup() {
 function showLikes(cardElementProvided, cardInfo) {
   let cardElement = document.querySelector(`[data-id="${cardInfo._id}"]`);
   if (!cardElement) {
-      cardElement = cardElementProvided;
+    cardElement = cardElementProvided;
   }
-  const likesAmountElement = cardElement.querySelector('.cards__like-amount');
+  const likesAmountElement = cardElement.querySelector(".cards__like-amount");
   if (cardInfo.likes.length > 0) {
-      likesAmountElement.classList.add('cards__like-amount_active');
-      likesAmountElement.textContent = cardInfo.likes.length;
+    likesAmountElement.classList.add("cards__like-amount_active");
+    likesAmountElement.textContent = cardInfo.likes.length;
   } else {
-      likesAmountElement.classList.remove('cards__like-amount_active');
+    likesAmountElement.classList.remove("cards__like-amount_active");
   }
 }
 
 function isLikedByUser(cardElement, cardInfo, userID) {
-  const cardHeartElement = cardElement.querySelector('.cards__like');
+  const cardHeartElement = cardElement.querySelector(".cards__like");
   if (cardHeartElement) {
     const isLiked = cardInfo.likes.some((user) => user._id === userID);
     if (isLiked) {
-      cardHeartElement.classList.add('cards__like_active');
+      cardHeartElement.classList.add("cards__like_active");
     }
   }
 }
 function showTrashIcon(cardElement, cardInfo, userId) {
   if (cardInfo.owner._id === userId) {
-      const trashBinElement = cardElement.querySelector('.cards__trash');
-      trashBinElement.classList.add('cards__trash_active');
+    const trashBinElement = cardElement.querySelector(".cards__trash");
+    trashBinElement.classList.add("cards__trash_active");
   }
 }
 
 function searchCardId(evt) {
-  const cardElement = evt.target.closest('.cards__item');
+  const cardElement = evt.target.closest(".cards__item");
   return cardElement.dataset.id;
 }
 
 function handleLikesUpdate(cardId, likesNumber) {
   const cardElement = document.querySelector(`[data-id="${cardId}"]`);
-  const likesAmount = cardElement.querySelector('.cards__like-amount');
+  const likesAmount = cardElement.querySelector(".cards__like-amount");
   likesAmount.textContent = likesNumber;
 }
 
@@ -55,29 +55,30 @@ function handleLike(cardInfo) {
 }
 
 function handleLikeIcon(evt) {
-  if (evt.target.classList.contains('cards__like_active')) {
-      const cardId = searchCardId(evt);
-      evt.target.classList.toggle('cards__like_active');
-      return dislikeCard(cardId)
-          .then(data => handleLike(data))
-          .catch(err => console.log(err));
+  if (evt.target.classList.contains("cards__like_active")) {
+    const cardId = searchCardId(evt);
+    evt.target.classList.toggle("cards__like_active");
+    return dislikeCard(cardId)
+      .then((data) => handleLike(data))
+      .catch((err) => console.log(err));
   }
-  if (evt.target.classList.contains('cards__like')) {
-      const cardId = searchCardId(evt);
-      evt.target.classList.toggle('cards__like_active');
-      return likeCard(cardId)
-          .then(data => handleLike(data))
-          .catch(err => console.log(err));
-      ;
+  if (evt.target.classList.contains("cards__like")) {
+    const cardId = searchCardId(evt);
+    evt.target.classList.toggle("cards__like_active");
+    return likeCard(cardId)
+      .then((data) => handleLike(data))
+      .catch((err) => console.log(err));
   }
 }
 
 function handleDeleteCard(evt) {
-  const clickedCard = evt.target.closest('.cards__item');
+  const clickedCard = evt.target.closest(".cards__item");
   const cardId = clickedCard.dataset.id;
   deleteCard(cardId)
-      .then(() => {clickedCard.remove();})
-      .catch(err => console.log(err));
+    .then(() => {
+      clickedCard.remove();
+    })
+    .catch((err) => console.log(err));
 }
 
 // функция замены значений карточки
@@ -95,13 +96,13 @@ function openZoomImage(evt) {
 
 // общая функция создания карточек
 function createCard(cardInfo, userID) {
-  const cardElement = cards.querySelector('.cards__item').cloneNode(true);
-  const cardImage = cardElement.querySelector('.cards__image');
-  const cardName = cardElement.querySelector('.cards__description');
-  const cardLike = cardElement.querySelector(".cards__like")
-  const cardTrash = cardElement.querySelector(".cards__trash")
+  const cardElement = cards.querySelector(".cards__item").cloneNode(true);
+  const cardImage = cardElement.querySelector(".cards__image");
+  const cardName = cardElement.querySelector(".cards__description");
+  const cardLike = cardElement.querySelector(".cards__like");
+  const cardTrash = cardElement.querySelector(".cards__trash");
 
-  cardElement.setAttribute('data-id', cardInfo._id);
+  cardElement.setAttribute("data-id", cardInfo._id);
   cardImage.src = cardInfo.link;
   cardName.textContent = cardInfo.name;
 
@@ -116,4 +117,4 @@ function createCard(cardInfo, userID) {
   return cardElement;
 }
 
-export {createCard}
+export { createCard };
