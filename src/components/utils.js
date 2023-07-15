@@ -21,11 +21,13 @@ export const inactiveButtonClass = popupForm.querySelector(
 export const popupProfile = document.querySelector("#profile-popup");
 export const popupOpened = document.querySelector(".popup_opened");
 export const profileForm = document.forms["profileForm"];
+export const profileFormSubmit = profileForm.querySelector('#popup-profile-submit')
 export const nameInput = profileForm.querySelector("#username-input");
 export const jobInput = profileForm.querySelector("#description-input");
 //popup - image
 export const popupImage = document.querySelector("#image-popup");
-export const imageFormSubmit = document.forms["imageForm"];
+export const imageForm = document.forms["imageForm"];
+export const imageFormSubmit = imageForm.querySelector('#popup-image-submit')
 export const imageDescription = popupImage.querySelector("#popup-image-name");
 export const imageLink = popupImage.querySelector("#popup-image-link");
 // cards

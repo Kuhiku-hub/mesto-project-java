@@ -37,11 +37,13 @@ import {
   popupAvatarSubmit,
   avatarForm,
   avatarOverlay,
+  profileFormSubmit,
+  imageForm
 } from "./utils.js";
 
 let userId = null;
 
-function setDefaultValues() {
+function setProfileFormDefaultValues() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileJob.textContent;
 }
@@ -80,7 +82,7 @@ function closePopupProfile() {
 
 function handleSubmitProfileForm(evt) {
   evt.preventDefault();
-  profileForm.textContent = "Сохранение...";
+  profileFormSubmit.textContent = "Сохранение...";
   profileDataDefault()
     .then((data) => {
       profileTitle.textContent =
@@ -88,11 +90,12 @@ function handleSubmitProfileForm(evt) {
       profileJob.textContent =
         data.about === "" ? profileJob.textContent : data.about;
       closePopupProfile(evt.target.closest(".popup"));
+
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      profileForm.textContent = "Сохранить";
-    });
+      profileFormSubmit.textContent = "Сохранить";
+    })
 }
 
 function handleSubmitAvatarProfileForm(evt) {
@@ -107,7 +110,8 @@ function handleSubmitAvatarProfileForm(evt) {
     .catch((err) => console.log(err))
     .finally(() => {
       popupAvatarSubmit.textContent = "Сохранить";
-    });
+      evt.target.closest(".popup").querySelector("form").reset();
+    })
 }
 
 function handleSubmitPlaceForm(evt) {
@@ -122,7 +126,8 @@ function handleSubmitPlaceForm(evt) {
     .catch((err) => console.log(err))
     .finally(() => {
       imageFormSubmit.textContent = "Сохранить";
-    });
+      evt.target.closest(".popup").querySelector("form").reset()
+    })
 }
 
 closeButtons.forEach((button) => {
@@ -132,7 +137,7 @@ closeButtons.forEach((button) => {
 
 function openProfilePopup() {
   openPopup(popupProfile);
-  setDefaultValues();
+  setProfileFormDefaultValues();
 }
 
 function openImageForm() {
@@ -153,7 +158,7 @@ avatarOverlay.addEventListener("click", openAvatarForm);
 
 avatarForm.addEventListener("submit", handleSubmitAvatarProfileForm);
 
-imageFormSubmit.addEventListener("submit", handleSubmitPlaceForm);
+imageForm.addEventListener("submit", handleSubmitPlaceForm);
 
 addMesto.addEventListener("click", openImageForm);
 
