@@ -1,9 +1,7 @@
 .cards__image {
   margin: 0;
-  min-width: 282px;
-  max-width: 282px;
-  max-height: 282px;
-  min-height: 282px;
+  width: 282px;
+  height: 282px;
   border-radius: 10px 10px 0 0;
   vertical-align: bottom;
   cursor:pointer;

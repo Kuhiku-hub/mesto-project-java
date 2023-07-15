@@ -8,45 +8,34 @@ import {
   postCard,
 } from "./api.js";
 
-import { createCard} from "./card.js";
+import {createCard} from "./card.js";
 
-import {enableValidation , validateInputs} from "./validate.js";
+import {enableValidation} from "./validate.js";
 
-import { openPopup , closePopup} from "./popup.js";
+import {openPopup , closePopup} from "./popup.js";
 
 import {
-  profile,
   profileTitle,
   profileJob,
   popupProfileOpenButton,
   addMesto,
-  popupForm,
-  popupInput,
   popupProfile,
-  popupOpened,
   profileForm,
+  cardsContainer,
   nameInput,
   jobInput,
   popupImage,
   imageFormSubmit,
   imageDescription,
   imageLink,
-  cards,
-  cardsContainer,
-  popupZoom,
-  zoom,
-  zoomContext,
-  zoomContainer,
   closeButtons,
-  initialCards,
   validationSelectors,
   popupAvatar,
   popupAvatarInput,
-  avatarOverlay,
   avatarPencil,
   profileAvatar,
-  popupSubmit,
-  popupAvatarSubmit
+  popupAvatarSubmit,
+  avatarForm ,
 } from "./utils.js";
 
 let userId = null;
@@ -65,10 +54,10 @@ function updateProfileInfo(data) {
 
 function createCards(cards) {
   const fragment = document.createDocumentFragment();
-  cards.forEach((card) => {
-    const cardElement = createCard(card, userId);
-    fragment.append(cardElement);
-  });
+  cards.forEach(card => {
+      const cardElement = createCard(card, userId);
+      fragment.append(cardElement);
+  })
   cardsContainer.append(fragment);
 }
 
@@ -107,17 +96,17 @@ function handleSubmitProfileForm(evt) {
 
 function handleSubmitAvatarProfileForm(evt) {
   evt.preventDefault();
-  popupAvatarSubmit.textContent = "Сохранение...";
+  popupAvatarSubmit.textContent = 'Сохранение...';
   const avatarLink = popupAvatarInput.value;
   avatarPictureDefault(avatarLink)
-    .then((data) => {
-      profileAvatar.style.backgroundImage = `url("${data.avatar}")`;
-      closePopup(evt.target.closest(".popup"));
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      popupAvatarSubmit.textContent = "Сохранить";
-    });
+      .then((data) => {
+          profileAvatar.style.backgroundImage = `url("${data.avatar}")`;
+          closePopup(evt.target.closest('.popup'));
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+          popupAvatarSubmit.textContent = 'Сохранить';
+      })
 }
 
 function handleSubmitPlaceForm(evt) {
@@ -128,7 +117,6 @@ function handleSubmitPlaceForm(evt) {
       const card = createCard(data, userId);
       cardsContainer.prepend(card);
       closePopup(evt.target.closest(".popup"));
-      evt.target.reset()
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -150,26 +138,10 @@ function openImageForm() {
   openPopup(popupImage);
 }
 
-function closeImageForm() {
-  closePopup(popupImage);
-}
 
 function openAvatarForm() {
   openPopup(popupAvatar);
 }
-
-function closeAvatarForm() {
-  closePopup(popupAvatar);
-}
-
-function addCard(item) {
-  const card = createCard(item);
-  cardsContainer.prepend(card)
-}
-
-initialCards.forEach((item) => {
-  addCard(item, cardsContainer);
-});
 
 renderPage();
 
@@ -178,7 +150,7 @@ enableValidation(validationSelectors);
 
 avatarPencil.addEventListener("click", openAvatarForm);
 
-popupAvatarSubmit.addEventListener('submit' , handleSubmitAvatarProfileForm)
+avatarForm.addEventListener('submit' , handleSubmitAvatarProfileForm)
 
 imageFormSubmit.addEventListener("submit", handleSubmitPlaceForm);
 

@@ -201,19 +201,20 @@
       <!-- Образец для создания карточек-->
       <ul id="cards-template" class="cards">
         <li class="cards__item">
-          <img
+          <button
             class="cards__trash"
-          />
+            type="button"
+          ></button>
           <img src="" class="cards__image" alt="" />
           <div class="cards__info-area">
             <h2 class="cards__description"></h2>
-            <div>
+            <div class="cards__likes">
               <button
               type="button"
               class="cards__like"
               aria-label="Лайк"
               ></button>
-
+              <p class="cards__like-amount">0</p>
             </div>
           </div>
         </li>

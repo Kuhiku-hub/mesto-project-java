@@ -38,8 +38,9 @@ export const zoomContext = popupZoom.querySelector(".popup__context");
 export const zoomContainer = popupZoom.querySelector(".popup__zoom-container");
 // popup - avatar
 export const popupAvatar = document.querySelector("#avatar-popup");
-export const popupAvatarInput = popupAvatar.querySelector("#popup-avatar-link");
-export const popupAvatarSubmit = popupAvatar.querySelector('#popup-avatar-submit')
+export const avatarForm = document.forms["avatar"];
+export const popupAvatarInput = avatarForm.querySelector("#popup-avatar-link");
+export const popupAvatarSubmit = avatarForm.querySelector('#popup-avatar-submit')
 // general
 export const closeButtons = document.querySelectorAll(".popup__close");
 // validation
