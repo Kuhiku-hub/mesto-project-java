@@ -47,12 +47,12 @@
         <!-- Конец секции cards -->
         <!-- Начало блока footer -->
         <footer class="footer">
-          <p class="footer__copyright">© 2020 Mesto Russia</p>
+          <p class="footer__copyright">© 2023 Mesto_Russia</p>
         </footer>
         <!-- Конец блока footer -->
       </main>
       <!-- popup - profile-->
-      <div id="profile-popup" class="popup">
+      <div id="popup-profile" class="popup">
         <div class="popup__container">
           <button
             id="popup-profile-close"
@@ -108,7 +108,7 @@
       </div>
       <!-- Конец popup profile-->
       <!--popup - image-->
-      <div id="image-popup" class="popup">
+      <div id="popup-image" class="popup">
         <div class="popup__container">
           <button
             id="popup-image-close"
@@ -158,11 +158,11 @@
       </div>
       <!--Конец popup - image-->
       <!--popup - avatar-->
-      <section id="avatar-popup" class="popup">
+      <section id="popup-avatar" class="popup">
         <div class="popup__container">
           <h3 class="popup__name">Обновить аватар</h3>
           <button class="popup__close" type="button"></button>
-          <form class="popup__form" name="avatar" novalidate>
+          <form id="popup-avatar-form" class="popup__form" name="avatar" novalidate>
             <input
               id="popup-avatar-link"
               class="popup__input"
@@ -184,7 +184,7 @@
       <!--Конец popup - avatar-->
       <!--popup - zoom-->
       <div id="popup-zoom" class="popup popup__zoom_active">
-        <div class="popup__zoom-container">
+        <div id="popup-zoom-form" class="popup__zoom-container">
           <button
             id="popup-zoom-close"
             type="button"
@@ -196,6 +196,22 @@
         </div>
       </div>
       <!-- Конец popup -->
+      <!-- Начало popup - notice-->
+      <div id="popup-notice" class="popup">
+        <div id="popup-notice-form" class="popup__container">
+          <button
+            type="button"
+            class="popup__close"
+            aria-label="Закрыть форму"
+          ></button>
+          <h3 class="popup__name">Вы уверены ?</h3>
+          <form class="popup__form" name="delete-card" novalidate>
+            <button type="submit" class="popup__submit" aria-label="Сохранить">
+              Да
+            </button>
+          </form>
+        </div>
+        <!-- Конец popup - notice-->
       <!-- Образец для создания карточек-->
       <ul id="cards-template" class="cards">
         <li class="cards__item">
