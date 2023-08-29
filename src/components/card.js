@@ -1,23 +1,49 @@
 
 class Card {
-  constructor(cardInfo, userId, { handleLikeIcon, handleDeleteCard, openZoomImage }) {
-    this._cardInfo = cardInfo;
-    this._userId = userId;
-    this._handleLikeIcon = handleLikeIcon;
-    this._handleDeleteCard = handleDeleteCard;
-    this._openZoomImage = openZoomImage;
+  constructor(cardObject, templateElement, authorData, handleActions) {
+    this._card = cardObject;
+    this._cardName = this._card.name;
+    this._cardImage = this._card.link;
+    this._cardTemplate = templateElement;
 
-    this._cardTemplate = document.querySelector("#cards-template");
+    this._userId = userId;
+    this._cardId = authorData.cardId;
+    this._authorId = authorData.authorId;
+
+    this._cardZoom = handleActions.handleCardZoom;
+    this._cardDelete = handleActions.handleCardDelete;
+    this._putLike = handleActions.handleCardLike;
+    this._removeLike = handleActions.handleCardDeleteLike;
   }
 
-  showLikes(likesAmountElement) {
-    likesAmountElement.textContent = this._cardInfo.likes.length;
+  _createCard() {
+    return document
+      .querySelector(this._cardTemplate)
+      .content.querySelector(".cards__item")
+      .cloneNode(true);
+  }
 
-    if (this._cardInfo.likes.length > 0) {
-      likesAmountElement.classList.add("cards__like-amount_active");
+  deleteCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
+  }
+
+  showLikes(card) {
+    this._likeArea = card.likes;
+    if (this._likeArea.length === 0) {
+      this.likeSelector.textContent = '';
     } else {
-      likesAmountElement.classList.remove("cards__like-amount_active");
+      this.likeSelector.textContent = this._likeArea.length;
     }
+    if (this._likedCard()) {
+      this._likeIcon.classList.add('cards__like_active');
+    } else {
+      this._likeIcon.classList.remove('cards__like_active');
+    }
+  }
+
+  _likedCard() {
+    return this._likeArea.find((userLike) => userLike._id === this._userId);
   }
 
   isLikedByUser(cardHeartElement) {
@@ -26,37 +52,51 @@ class Card {
     }
   }
 
-  showTrashIcon(trashBinElement) {
-    if (this._cardInfo.owner._id === this._userId) {
-      trashBinElement.classList.add("cards__trash_active");
+  _interactLike = () => {
+    if (this._likedCard()) {
+      this._removeLike(this._cardId);
+    } else {
+      this._putLike(this._cardId);
     }
-  }
+  };
 
-  _setEventListeners(cardElement) {
-    cardElement.querySelector(".cards__like").addEventListener("click", () =>
-      this._handleLikeIcon(cardElement)
+  _setEventListeners = () => {
+    this._likeIcon.addEventListener("click", this._interactLike);
+    this._elementImages.addEventListener("click", () =>
+      this._cardZoom(this._cardName, this._cardImage)
     );
-    cardElement.querySelector(".cards__trash").addEventListener("click", () =>
-      this._handleDeleteCard(cardElement)
-    );
-    cardElement.querySelector(".cards__image").addEventListener("click", () =>
-      this._openZoomImage(cardElement)
-    );
-  }
+
+    if (this._userId === this._authorId) {
+      this._deleteIcon.addEventListener("click", () =>
+        this._cardDelete(this, this._cardId)
+      );
+    } else {
+      this._deleteIcon.remove();
+    }
+  };
 
   generateCard() {
-    const cardElement = this._cardTemplate.cloneNode(true);
+    this._cardElement = this._createCard();
+    this._elementImages = this._cardElement.querySelector(".cards__image");
+    this._elementName = this._cardElement.querySelector(
+      ".cards__description"
+    );
+    this._likeIcon = this._cardElement.querySelector(".cards__like");
+    this._deleteIcon = this._cardElement.querySelector(
+      ".cards__trash"
+    );
+    this.likeSelector = this._cardElement.querySelector(
+      ".cards__like-amount"
+    );
 
-    cardElement.setAttribute("data-id", this._cardInfo._id);
-    cardElement.querySelector(".cards__image").src = this._cardInfo.link;
-    cardElement.querySelector(".cards__description").textContent = this._cardInfo.name;
+    this._elementName.textContent = this._cardName;
+    this._elementImages.src = this._cardImage;
+    this._elementImages.alt = this._cardName;
+    this.showLikes(this._card);
 
-    this.isLikedByUser(cardElement.querySelector(".cards__like"));
-    this.showLikes(cardElement.querySelector(".cards__like-amount"));
-    this.showTrashIcon(cardElement.querySelector(".cards__trash"));
-    this._setEventListeners(cardElement);
+    this._setEventListeners();
 
-    return cardElement;
+    return this._cardElement;
   }
 }
 

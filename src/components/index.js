@@ -58,6 +58,44 @@ Promise.all([api.getUserInfo(), api.getCards()])
     console.log(`Возникли неполадки , ${err}`)
   );
 
+  const renderCard = (cardObject) => {
+    const cardItem = new Card(
+      cardObject,
+      "#cards-template",
+      userId,
+      { cardId: cardObject._id, authorId: cardObject.owner._id },
+      {
+        handleCardZoom: (name, image) => {
+          popupImageZoom.open(name, image);
+        },
+        handleCardDelete: (cardElement, cardId) => {
+          popupDeleteCard.open(cardElement, cardId);
+        },
+        handleCardLike: (cardId) => {
+          api
+            .likeCard(cardId)
+            .then((res) => {
+              cardItem.showLikes(res);
+            })
+            .catch((err) => {
+              console.log(`При лайке карточки возникла ошибка, ${err}`);
+            });
+        },
+        handleCardDeleteLike: (cardId) => {
+          api
+            .dislikeCard(cardId)
+            .then((res) => {
+              cardItem.showLikes(res);
+            })
+            .catch((err) => {
+              console.log(`При дизлайке карточки возникла ошибка, ${err}`);
+            });
+        },
+      }
+    );
+    return cardItem.generateCard();
+  };
+
 const popupZoom = new PopupWithImage("#popup-zoom");
 popupZoom.addEventListeners();
 

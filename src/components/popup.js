@@ -1,8 +1,6 @@
 class Popup {
-  constructor(popupElement) {
-    this._popupElement = popupElement;
-    this._handleEscClose = this._handleEscClose.bind(this);
-    this._handleOverlayClose = this._handleOverlayClose.bind(this);
+  constructor(popupSelector) {
+    this._popupElement = document.querySelector(popupSelector)
   }
 
   closePopup() {
@@ -15,13 +13,13 @@ class Popup {
     this._addEventListeners();
   }
 
-  _handleEscClose(event) {
+  handleEscClose(event) {
     if (event.key === "Escape") {
       this.closePopup();
     }
   }
 
-  _handleOverlayClose(event) {
+  handleOverlayClose(event) {
     if (event.target === this._popupElement) {
       this.closePopup();
     }
