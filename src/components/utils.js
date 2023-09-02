@@ -32,3 +32,5 @@ export const popupAvatar = document.querySelector("#popup-avatar");
 export const popupAvatarEditForm =
   popupAvatar.querySelector("#popup-avatar-form");
 export const iconAvatarEdit = document.querySelector(".profile__pencil");
+export const popupZoom = document.querySelector('#popup-zoom')
+export const popupZoomForm = document.querySelector('#popup-zoom-form')

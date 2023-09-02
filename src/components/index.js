@@ -1,6 +1,6 @@
 import "../pages/index.css";
 
-import { PopupNotice } from '../components/popupNotice'
+import { PopupNotice } from "../components/popupNotice";
 import { Api } from "../components/api.js";
 import { Card } from "../components/card.js";
 import { FormValidator } from "../components/validationForm.js";
@@ -26,7 +26,7 @@ import {
 
 const api = new Api(apiConfig);
 
-let userId
+let userId;
 
 const initialCards = new Section(
   {
@@ -35,13 +35,13 @@ const initialCards = new Section(
       initialCards.addItem(cardElement);
     },
   },
-  '.cards'
+  ".cards"
 );
 
 const userInfo = new UserInfo({
   profileFormNameInput,
   profileFormAboutInput,
-  popupAvatarEditForm
+  popupAvatarEditForm,
 });
 
 Promise.all([api.getUserInfo(), api.getCards()])
@@ -54,47 +54,45 @@ Promise.all([api.getUserInfo(), api.getCards()])
     userInfo.setAvatar(userProfileData.avatar);
     initialCards.renderItems(cardObject.reverse());
   })
-  .catch((err) =>
-    console.log(`Возникли неполадки , ${err}`)
-  );
+  .catch((err) => console.log(`Возникли неполадки , ${err}`));
 
-  const renderCard = (cardObject) => {
-    const cardItem = new Card(
-      cardObject,
-      "#cards-template",
-      userId,
-      { cardId: cardObject._id, authorId: cardObject.owner._id },
-      {
-        handleCardZoom: (name, image) => {
-          popupImageZoom.open(name, image);
-        },
-        handleCardDelete: (cardElement, cardId) => {
-          popupDeleteCard.open(cardElement, cardId);
-        },
-        handleCardLike: (cardId) => {
-          api
-            .likeCard(cardId)
-            .then((res) => {
-              cardItem.showLikes(res);
-            })
-            .catch((err) => {
-              console.log(`При лайке карточки возникла ошибка, ${err}`);
-            });
-        },
-        handleCardDeleteLike: (cardId) => {
-          api
-            .dislikeCard(cardId)
-            .then((res) => {
-              cardItem.showLikes(res);
-            })
-            .catch((err) => {
-              console.log(`При дизлайке карточки возникла ошибка, ${err}`);
-            });
-        },
-      }
-    );
-    return cardItem.generateCard();
-  };
+const renderCard = (cardObject) => {
+  const cardItem = new Card(
+    cardObject,
+    "#cards-template",
+    userId,
+    { cardId: cardObject._id, authorId: cardObject.owner._id },
+    {
+      handleCardZoom: (name, image) => {
+        popupZoom.open(name, image);
+      },
+      handleCardDelete: (cardElement, cardId) => {
+        popupDeleteCard.open(cardElement, cardId);
+      },
+      handleCardLike: (cardId) => {
+        api
+          .likeCard(cardId)
+          .then((res) => {
+            cardItem.showLikes(res);
+          })
+          .catch((err) => {
+            console.log(`При лайке карточки возникла ошибка, ${err}`);
+          });
+      },
+      handleCardDeleteLike: (cardId) => {
+        api
+          .dislikeCard(cardId)
+          .then((res) => {
+            cardItem.showLikes(res);
+          })
+          .catch((err) => {
+            console.log(`При дизлайке карточки возникла ошибка, ${err}`);
+          });
+      },
+    }
+  );
+  return cardItem.generateCard();
+};
 
 const popupZoom = new PopupWithImage("#popup-zoom");
 popupZoom.addEventListeners();
@@ -169,10 +167,7 @@ popupNewCard.addEventListeners();
 // Валидация popup
 const cardItemValidate = new FormValidator(validationSelectors, formAddCard);
 cardItemValidate.enableValidation();
-const profileEditValidate = new FormValidator(
-  validationSelectors,
-  profileForm
-);
+const profileEditValidate = new FormValidator(validationSelectors, profileForm);
 profileEditValidate.enableValidation();
 const profileAvatarEditValidate = new FormValidator(
   validationSelectors,

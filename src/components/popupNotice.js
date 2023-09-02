@@ -3,7 +3,7 @@ import { Popup } from "./popup.js";
 class PopupNotice extends Popup {
   constructor(popupSelector, { callbackNotice }) {
     super(popupSelector);
-    this._submitButton = this._popupElement.querySelector(".popup__form");
+    this._submitButton = this._popupItem.querySelector(".popup__form");
     this._callbackNotice = callbackNotice;
     this._handleSubmit = this._handleSubmit.bind(this);
   }

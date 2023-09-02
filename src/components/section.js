@@ -8,8 +8,8 @@ class Section {
     items.forEach(this._renderer);
   }
 
-  addItem(element) {
-    this._containerElement.prepend(element);
+  addItem(cardElement) {
+    this._containerElement.prepend(cardElement);
   }
 }
 

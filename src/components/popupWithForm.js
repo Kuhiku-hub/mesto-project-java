@@ -1,18 +1,16 @@
 import { Popup } from "./popup.js";
 
 class PopupWithForm extends Popup {
-  constructor(popupElement, { onFormSubmit }) {
-    super(popupElement);
+  constructor(popupSelector, { onFormSubmit }) {
+    super(popupSelector);
     this._onFormSubmit = onFormSubmit;
-    this._popupForm = this._popupElement.querySelector(".popup__form");
+    this._popupForm = this._popupItem.querySelector(".popup__form");
     this._inputList = Array.from(
       this._popupForm.querySelectorAll(".popup__input")
     );
-    this._submitButton = this._popupElement.querySelector(".popup__submit");
+    this._submitButton = this._popupItem.querySelector(".popup__submit");
     this._submitButtonText = this._submitButton.textContent;
 
-    // Привязка контекста
-    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   _getInputValues() {
