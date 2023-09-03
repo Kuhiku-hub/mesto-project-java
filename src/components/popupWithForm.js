@@ -8,8 +8,8 @@ class PopupWithForm extends Popup {
     this._inputList = Array.from(
       this._popupForm.querySelectorAll(".popup__input")
     );
-    this._submitButton = this._popupItem.querySelector(".popup__submit");
-    this._submitButtonText = this._submitButton.textContent;
+    this._sendButton = this._popupItem.querySelector(".popup__submit");
+    this._submitButtonText = this._sendButton.textContent;
 
   }
 
@@ -37,11 +37,11 @@ class PopupWithForm extends Popup {
   }
 
   showSavingText() {
-    this._submitButton.textContent = "Сохранение...";
+    this._sendButton.textContent = "Сохранение...";
   }
 
   restoreSubmitButtonText() {
-    this._submitButton.textContent = this._submitButtonText;
+    this._sendButton.textContent = this._submitButtonText;
   }
 
   closeAndReset() {
