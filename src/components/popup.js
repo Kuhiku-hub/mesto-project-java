@@ -1,39 +1,26 @@
-class Popup {
-  constructor(popupSelector) {
-    this._popupItem = document.querySelector(popupSelector)
-  }
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", setEscButtonClose);
+  popup.removeEventListener("mousedown", setOverlayClickClose);
+}
 
-  closePopup() {
-    this._popupItem.classList.remove("popup_opened");
-    this._removeEventListeners();
-  }
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", setEscButtonClose);
+  popup.addEventListener("mousedown", setOverlayClickClose);
+}
 
-  openPopup() {
-    this._popupItem.classList.add("popup_opened");
-    this._addEventListeners();
-  }
-
-  handleEscClose(event) {
-    if (event.key === "Escape") {
-      this.closePopup();
-    }
-  }
-
-  handleOverlayClose(event) {
-    if (event.target === this._popupItem) {
-      this.closePopup();
-    }
-  }
-
-  addEventListeners() {
-    document.addEventListener("keydown", this._handleEscClose);
-    this._popupItem.addEventListener("mousedown", this._handleOverlayClose);
-  }
-
-  removeEventListeners() {
-    document.removeEventListener("keydown", this._handleEscClose);
-    this._popupItem.removeEventListener("mousedown", this._handleOverlayClose);
+function setEscButtonClose(event) {
+  if (event.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
+    closePopup(popupOpened);
   }
 }
 
-export {Popup};
+function setOverlayClickClose(event) {
+  if (event.target.classList.contains("popup_opened")) {
+    closePopup(event.target);
+  }
+}
+
+export { setOverlayClickClose, setEscButtonClose, openPopup, closePopup };
