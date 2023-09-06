@@ -1,4 +1,4 @@
-class FormValidator {
+class ValidationForm {
   constructor(validationSettings, formElement) {
     this._validationSettings = validationSettings;
     this._formElement = formElement;
@@ -55,7 +55,7 @@ class FormValidator {
     });
   }
 
-  enableValidationCheck() {
+  enableValidation() {
     this._setEventListeners();
   }
 
@@ -81,5 +81,5 @@ class FormValidator {
   }
 }
 
-export { FormValidator };
+export { ValidationForm  };
 
