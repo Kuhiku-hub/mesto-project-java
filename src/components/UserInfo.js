@@ -16,9 +16,8 @@ class UserInfo {
     this._nameElement.textContent = username;
     this._descriptionElement.textContent = description;
   }
-
   setAvatar(avatarUrl) {
-    this._avatarElement.src = avatarUrl;
+    this._avatarElement.style.backgroundImage = `url(${avatarUrl})`;
   }
 }
 

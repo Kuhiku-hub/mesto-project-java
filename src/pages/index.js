@@ -21,15 +21,15 @@ import {
   apiConfig,
 } from "../components/utils/utils.js";
 
-const api = new Api(apiConfig);
-
-let userId
-
 const userInfo = new UserInfo({
   usernameSelector: ".profile__name",
   descriptionSelector: ".profile__description",
-  avatarSelector: ".profile__avatar",
+  avatarSelector: ".profile__avatar"
 });
+
+const api = new Api(apiConfig);
+
+let userId
 
 const renderCard = function (cardObject) {
   const cardItem = new Card(
@@ -83,7 +83,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
     userId = userProfileData._id;
     userInfo.setData({
       username: userProfileData.name,
-      description: userProfileData.about,
+      description: userProfileData.about
     });
     userInfo.setAvatar(userProfileData.avatar);
     initialCards.renderItems(cardObject.reverse());
