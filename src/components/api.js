@@ -10,7 +10,7 @@ class Api {
   }
 
   getUserInfo = () =>
-    fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then(
+     fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then(
       this._checkResponse
     );
 
@@ -20,18 +20,18 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse);
 
-  updateProfileData = (name, about) =>
+  updateProfileData = (profileData) =>
     fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ name, about }),
+      body: JSON.stringify({ name: profileData.username, about: profileData.description }),
     }).then(this._checkResponse);
 
-  updateAvatar = (link) =>
+  updateAvatar = (avatarUrl) =>
     fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: link }),
+      body: JSON.stringify({ avatar: avatarUrl.avatar }),
     }).then(this._checkResponse);
 
   createCard = (name, link) =>
@@ -42,13 +42,13 @@ class Api {
     }).then(this._checkResponse);
 
   likeCard = (cardId) =>
-    fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._checkResponse);
 
   dislikeCard = (cardId) =>
-    fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);

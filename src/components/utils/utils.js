@@ -11,7 +11,7 @@ export const validationSelectors = {
 export const apiConfig = {
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-26",
   headers: {
-    authorization: "b8fdb423-3271-491f-87f9-a27da13635fd",
+    authorization:"b8fdb423-3271-491f-87f9-a27da13635fd",
     "Content-Type": "application/json",
   },
 };
@@ -31,6 +31,6 @@ export const profileFormAboutInput =
 export const popupAvatar = document.querySelector("#popup-avatar");
 export const popupAvatarEditForm =
   popupAvatar.querySelector("#popup-avatar-form");
-export const iconAvatarEdit = document.querySelector(".profile__pencil");
+export const iconAvatarEdit = document.querySelector(".profile__overlay");
 export const popupZoom = document.querySelector('#popup-zoom')
 export const popupZoomForm = document.querySelector('#popup-zoom-form')
