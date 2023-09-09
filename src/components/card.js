@@ -51,7 +51,7 @@ class Card {
     }
   }
 
-  makeCard() {
+  generateCard() {
     this._cardElement = this._createCard();
     this._elementImages = this._cardElement.querySelector('.cards__image');
     this._elementName = this._cardElement.querySelector('.cards__description');

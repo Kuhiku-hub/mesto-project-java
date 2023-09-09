@@ -21,6 +21,7 @@ import {
   apiConfig,
 } from "../components/utils/utils.js";
 
+
 const userInfo = new UserInfo({
   usernameSelector: ".profile__name",
   descriptionSelector: ".profile__description",
@@ -30,6 +31,9 @@ const userInfo = new UserInfo({
 const api = new Api(apiConfig);
 
 let userId
+
+const popupZoom = new PopupWithImage("#popup-zoom");
+popupZoom.setEventListeners();
 
 const renderCard = function (cardObject) {
   const cardItem = new Card(
@@ -57,8 +61,8 @@ const renderCard = function (cardObject) {
       handleCardDeleteLike: (cardId) => {
         api
           .dislikeCard(cardId)
-          .then((item) => {
-            cardItem.showLikes(item);
+          .then((res) => {
+            cardItem.showLikes(res);
           })
           .catch((err) => {
             console.log(`При дизлайке карточки возникла ошибка, ${err}`);
@@ -90,16 +94,13 @@ Promise.all([api.getUserInfo(), api.getCards()])
   })
   .catch((err) => console.log(`Возникли неполадки , ${err}`));
 
-const popupZoom = new PopupWithImage("#popup-zoom");
-popupZoom.setEventListeners();
-
 const popupEditAvatar = new PopupWithForm("#popup-avatar", {
   onFormSubmit: (userProfileData) => {
     popupEditAvatar.showSavingText();
     api
       .updateAvatar(userProfileData)
-      .then((item) => {
-        userInfo.setAvatar(item.avatar);
+      .then((res) => {
+        userInfo.setAvatar(res.avatar);
         popupEditAvatar.closeAndReset();
       })
       .catch((err) =>
@@ -113,10 +114,10 @@ popupEditAvatar.setEventListeners();
 const popupDeleteCard = new PopupNotice("#popup-notice", {
   callbackNotice: (cardElement, cardId) => {
     api
-      .deleteCard(cardId)
+      .removeCard(cardId)
       .then(() => {
         cardElement.removeCard();
-        popupDeleteCard.closeAndReset();
+        popupDeleteCard.closePopup();
       })
       .catch((err) =>
         console.log(`При удалении карточки возникла ошибка, ${err}`)
@@ -130,8 +131,8 @@ const popupEditProfile = new PopupWithForm("#popup-profile", {
     popupEditProfile.showSavingText();
     api
       .updateProfileData(userProfileData)
-      .then((item) => {
-        userInfo.setData({ username: item.name, description: item.about });
+      .then((res) => {
+        userInfo.setData({ username: res.name, description: res.about });
         popupEditProfile.closeAndReset();
       })
       .catch((err) =>
